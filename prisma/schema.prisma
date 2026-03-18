@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Example model for a travel agency
+model Destination {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  price       Float
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+// User - synced from Clerk
+model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId      String   @unique // Clerk user ID
+  email        String?
+  firstName    String?
+  lastName     String?
+  imageUrl     String?
+  gender       String?  // male, female, other, prefer_not_to_say
+  phoneNumber  String?
+  role         UserRole @default(USER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// Travel service with multi-language support (single-day trips)
+model Service {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  coverImage      String?  // UploadThing URL
+  images          String[] // Array of UploadThing URLs
+  details         Json     // [{lang, title, description}, ...] description is markdown
+  highlights      Json?    // [{lang, items: string[]}]
+  includes        Json?    // [{lang, items: string[]}]
+  excludes        Json?    // [{lang, items: string[]}]
+  goodToKnow      Json?    // [{lang, items: string[]}]
+  priceAdult      Float
+  priceKids       Float    @default(0)
+  duration        String?  // e.g. "1 day", "Half day"
+  location        String?  // Country/city
+  category        String?  // adventure, beach, cultural, etc.
+  maxParticipants Int?     // Optional group size limit
+  isActive        Boolean  @default(true)
+  slug            String   @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  bookings        Booking[]
+  embedding       ServiceEmbedding?
+}
+
+model ServiceEmbedding {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  serviceId        String   @unique @db.ObjectId
+  service          Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  embedding        Json     // Array of floats from OpenAI embedding
+  content          String   // Text used for embedding
+  tags             String[]
+  targetAudience   String[] // couples, families, kids, groups
+  physicalLevel    String?  // Easy, Moderate, Hard
+  bestTimeOfDay    String?  // Morning, Sunset, Night
+  createdAt        DateTime @default(now())
+}
+
+
+model Booking {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  date      DateTime
+  adults    Int
+  children  Int
+  total     Float
+
+  user      UserSnapshot
+
+  serviceId String?  @db.ObjectId
+  service   Service? @relation(fields: [serviceId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+type UserSnapshot {
+  id        String
+  email     String
+  firstName String
+  lastName  String
+  imageUrl  String?
+  role      String
+}

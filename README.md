@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Travel Agency
+
+A modern travel agency website built with Next.js 16, TypeScript, Tailwind CSS, shadcn/ui, next-intl, TanStack Query, and Prisma with MongoDB.
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **Internationalization**: next-intl (English, Arabic, Russian, Italian)
+- **Data Fetching**: TanStack Query (useQuery, useMutation)
+- **Database**: Prisma with MongoDB
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- MongoDB (local or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
+
+### Installation
+
+1. Clone the repository and install dependencies:
+
+```bash
+npm install
+```
+
+2. Set up your environment variables:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and add your MongoDB connection string:
+
+```
+DATABASE_URL="mongodb+srv://username:password@cluster.mongodb.net/travel_agency?retryWrites=true&w=majority"
+```
+
+3. Generate the Prisma client (runs automatically on `npm install`):
+
+```bash
+npx prisma generate
+```
+
+4. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) - you'll be redirected to `/en` (or your default locale).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   ├── [locale]/          # Locale-based routes
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── destinations/
+│   │   ├── about/
+│   │   └── contact/
+│   └── api/               # API routes
+├── components/
+│   ├── layout/            # Navbar, Hero
+│   ├── providers/        # QueryProvider
+│   └── ui/               # shadcn components
+├── hooks/                # useDestinations, etc.
+├── i18n/                 # next-intl config
+└── lib/                  # prisma, utils
+messages/                 # Translation files (en, ar, ru, it)
+prisma/
+└── schema.prisma        # Database schema
+```
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- **Multi-language support**: Switch between English, Arabic (RTL), Russian, and Italian
+- **Responsive design**: Mobile-first with shadcn/ui components
+- **TanStack Query**: Example hooks for `useQuery` and `useMutation` in `src/hooks/use-destinations.ts`
+- **Prisma + MongoDB**: Database setup with example Destination model
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Adding New Translations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Add keys to `messages/en.json`, `messages/ar.json`, `messages/ru.json`, and `messages/it.json`
+2. Use in components: `const t = useTranslations('Namespace'); t('key')`
 
-## Deploy on Vercel
+## Database
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The Prisma schema includes an example `Destination` model. To push your schema to MongoDB:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npx prisma db push
+```
+
+For migrations (if using a SQL database):
+
+```bash
+npx prisma migrate dev
+```

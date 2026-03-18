@@ -1,7 +1,18 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "utfs.io", pathname: "/**" },
+      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
+      { protocol: "https", hostname: "img.clerk.com", pathname: "/**" },
+      { protocol: "https", hostname: "www.bahighlife.com", pathname: "/**" },
+      { protocol: "https", hostname: "x00zgx6026.ufs.sh", pathname: "/**" }
+    ],
+  },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);
