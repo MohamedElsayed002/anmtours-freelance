@@ -67,7 +67,7 @@ export default async function ServicePage({ params }: Props) {
         </AnimatedSection>
 
         <div className="mt-12 grid gap-12 lg:grid-cols-3">
-          <AnimatedSection className="lg:col-span-2">
+          <AnimatedSection className="lg:col-span-2 rtl:text-right rtl:items-end">
             <ServiceTabs
               description={description}
               highlights={highlights}

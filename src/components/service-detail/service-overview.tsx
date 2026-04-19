@@ -21,7 +21,7 @@ export function ServiceOverview({
       {highlights.length > 0 && (
         <div>
           <h3 className="text-lg font-semibold mb-4">{highlightsLabel}</h3>
-          <ul className="space-y-3">
+          <ul className="space-y-3 rtl:text-right">
             {highlights.map((item, i) => (
               <li
                 key={i}

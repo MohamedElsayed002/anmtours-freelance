@@ -7,7 +7,7 @@ import { routing } from "@/i18n/routing";
 export type Locale = (typeof routing.locales)[number];
 
 export const SEO_CONFIG = {
-  siteName: "A&T Tours",
+  siteName: "A&M Tours ",
   ogImage: "/logo.jpeg",
   getBaseUrl: (): string => {
     if (process.env.BASE_URL) return process.env.BASE_URL.replace(/\/$/, "");

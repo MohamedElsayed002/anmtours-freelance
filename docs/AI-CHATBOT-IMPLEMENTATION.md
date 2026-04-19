@@ -1,6 +1,6 @@
 # AI Chatbot Implementation Guide
 
-A comprehensive guide to the personalized travel assistant chatbot built for A&T Tours.
+A comprehensive guide to the personalized travel assistant chatbot built for A&M Tours.
 
 ---
 
@@ -9,7 +9,7 @@ A comprehensive guide to the personalized travel assistant chatbot built for A&T
 1. [Overview](#overview)
 2. [Architecture](#architecture)
 3. [How It Works](#how-it-works)
-4. [Personalization for A&T Tours](#personalization-for-amt-tours)
+4. [Personalization for A&M Tours](#personalization-for-amt-tours)
 5. [Technical Implementation](#technical-implementation)
 6. [Configuration](#configuration)
 7. [File Structure](#file-structure)
@@ -56,7 +56,7 @@ The chatbot is a **Retrieval Augmented Generation (RAG)** powered travel assista
 
 ### 1. User Sends a Message
 
-The user types or clicks a suggested question (e.g., "I want something romantic", "Who is A&T Tours?").
+The user types or clicks a suggested question (e.g., "I want something romantic", "Who is A&M Tours?").
 
 ### 2. RAG Pipeline (Retrieval)
 
@@ -74,7 +74,7 @@ The user types or clicks a suggested question (e.g., "I want something romantic"
 The LLM receives:
 
 - **Company information** (from `chat-faq.ts`) — name, description, contact, etc.
-- **FAQ answers** (from `chat-faq.ts`) — "Who am I?", "Who is A&T Tours?", etc.
+- **FAQ answers** (from `chat-faq.ts`) — "Who am I?", "Who is A&M Tours?", etc.
 - **Recommended services** (from RAG) — titles, prices, highlights, includes, excludes
 - **Strict instructions** — only use provided data, never invent information
 
@@ -86,19 +86,19 @@ The response is streamed token-by-token using the Vercel AI SDK. The UI renders 
 
 ---
 
-## Personalization for A&T Tours
+## Personalization for A&M Tours
 
 ### Company-Specific Data
 
 All company information lives in **`src/config/chat-faq.ts`**:
 
-| Data | Purpose |
-|------|---------|
-| **Company name** | A&T Tours |
-| **Tagline** | Your trusted travel partner in Sharm El Sheikh |
-| **Description** | Premium travel agency, safaris, diving, snorkeling, etc. |
-| **Contact** | Email, phone, location |
-| **Founded, services** | For "Who is A&T Tours?" type questions |
+| Data                  | Purpose                                                  |
+| --------------------- | -------------------------------------------------------- |
+| **Company name**      | A&M Tours                                                |
+| **Tagline**           | Your trusted travel partner in Sharm El Sheikh           |
+| **Description**       | Premium travel agency, safaris, diving, snorkeling, etc. |
+| **Contact**           | Email, phone, location                                   |
+| **Founded, services** | For "Who is A&M Tours?" type questions                   |
 
 **You can edit this file** to update any company info. The chatbot will never make up data—it only uses what you provide here.
 
@@ -106,10 +106,10 @@ All company information lives in **`src/config/chat-faq.ts`**:
 
 Pre-defined Q&A pairs ensure consistent answers:
 
-- **"Who am I?"** — Explains the user is chatting with the A&T Tours Travel Assistant.
-- **"Who is A&T Tours?"** — Company overview and contact details.
-- **"What does A&T Tours offer?"** — Services summary.
-- **"How can I contact A&T Tours?"** — Contact info.
+- **"Who am I?"** — Explains the user is chatting with the A&M Tours Travel Assistant.
+- **"Who is A&M Tours?"** — Company overview and contact details.
+- **"What does A&M Tours offer?"** — Services summary.
+- **"How can I contact A&M Tours?"** — Contact info.
 
 Add or edit FAQ entries in `chat-faq.ts` to control these answers.
 
@@ -131,7 +131,7 @@ The chatbot suggests questions tailored to your offerings:
 - "We only have one free day"
 - "Something relaxing?"
 - "Who am I?"
-- "Who is A&T Tours?"
+- "Who is A&M Tours?"
 
 ### Clickable Links
 
@@ -173,11 +173,11 @@ The Vercel AI SDK `streamText` function streams tokens in real-time. The UI uses
 
 ### Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `OPENAI_API_KEY` | Yes | OpenAI API key for embeddings and chat |
-| `DATABASE_URL` | Yes | MongoDB connection string |
-| `BASE_URL` | No | Base URL for service links (default: `https://anntours.vercel.app`) |
+| Variable         | Required | Description                                                         |
+| ---------------- | -------- | ------------------------------------------------------------------- |
+| `OPENAI_API_KEY` | Yes      | OpenAI API key for embeddings and chat                              |
+| `DATABASE_URL`   | Yes      | MongoDB connection string                                           |
+| `BASE_URL`       | No       | Base URL for service links (default: `https://anntours.vercel.app`) |
 
 ### Backfilling Embeddings
 
@@ -219,7 +219,7 @@ src/
 
 ## Summary
 
-The chatbot is personalized for A&T Tours by:
+The chatbot is personalized for A&M Tours by:
 
 1. **Using your real services** — Recommendations come from your database via RAG.
 2. **Using your company data** — All company/FAQ info is in `chat-faq.ts`.

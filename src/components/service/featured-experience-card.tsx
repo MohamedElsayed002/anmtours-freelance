@@ -91,7 +91,7 @@ export function FeaturedExperienceCard({
               {startingFrom}
             </p>
             <p className="text-xl font-bold text-foreground">
-              €{Math.round(service.priceAdult)}
+              £{Math.round(service.priceAdult)}
             </p>
           </div>
           <Button

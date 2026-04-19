@@ -23,8 +23,8 @@ export function ServiceWhatIncluded({
     <ul
       className={
         variant === "list"
-          ? "list-disc list-inside space-y-2 text-muted-foreground ps-4"
-          : "space-y-3"
+          ? "list-disc list-inside space-y-2 text-muted-foreground ps-4 rtl:text-right rtl:ps-0 rtl:pe-4"
+          : "space-y-3 rtl:text-right"
       }
     >
       {items.map((item, i) => (
@@ -37,7 +37,7 @@ export function ServiceWhatIncluded({
           }
         >
           {variant !== "list" && <Icon className={iconClass} />}
-          <span className="text-muted-foreground">{item}</span>
+          <span className="text-muted-foreground rtl:text-right">{item}</span>
         </li>
       ))}
     </ul>

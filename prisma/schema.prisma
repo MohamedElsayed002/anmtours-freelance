@@ -105,3 +105,15 @@ type UserSnapshot {
   imageUrl  String?
   role      String
 }
+
+model Review {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  authorName  String
+  authorImage String?
+  rating      Int      @default(5)
+  text        String
+  images      String[] // Array of attached image URLs
+  addedAt     DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { getAllUsers, getAllServices, getAllBookings } from "@/lib/admin";
 import { getServiceDetailForLocale } from "@/lib/services";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
+import { getReviews } from "@/app/actions/reviews";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -27,10 +28,11 @@ export default async function AdminPage({ params }: Props) {
     redirect("/");
   }
 
-  const [users, services, bookings] = await Promise.all([
+  const [users, services, bookings, reviews] = await Promise.all([
     getAllUsers(),
     getAllServices(),
     getAllBookings(),
+    getReviews(),
   ]);
 
   const servicesWithTitles = services.map((s) => ({
@@ -53,6 +55,7 @@ export default async function AdminPage({ params }: Props) {
         users={users}
         services={servicesWithTitles}
         bookings={bookingsWithTitles}
+        reviews={reviews}
       />
     </div>
   );

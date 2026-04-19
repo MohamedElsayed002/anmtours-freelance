@@ -10,6 +10,7 @@ import { DestinationsPreview } from "@/components/home/destinations-preview";
 import { CtaSection } from "@/components/home/cta-section";
 import { TrustBadges } from "@/components/layout/TrustBadges";
 import { Testimonals } from "@/components/testimonals";
+import { getReviews } from "@/app/actions/reviews";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -19,7 +20,8 @@ export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("Home");
-  // npx prisma db push 
+  const reviews = await getReviews();
+  
   return (
     <>
       <Hero />
@@ -35,7 +37,7 @@ export default async function HomePage({ params }: Props) {
       </AnimatedSection>
       <WhyChooseUs />
       <StatsSection />
-      <Testimonals/>
+      <Testimonals reviews={reviews} locale={locale} />
       <DestinationsPreview
         services={await getServicesWithUniqueLocations(4)}
         locale={locale}

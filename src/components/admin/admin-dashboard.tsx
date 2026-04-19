@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Link, useRouter } from "@/i18n/navigation";
-import { Users, Package, ChevronDown, Pencil, Trash2, Calendar } from "lucide-react";
+import { Users, Package, ChevronDown, Pencil, Trash2, Calendar, MessageSquare } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AdminBookings } from "./admin-bookings";
+import { AdminReviews } from "./admin-reviews";
 
 type User = {
   id: string;
@@ -63,14 +64,16 @@ type AdminDashboardProps = {
   users: User[];
   services: Service[];
   bookings: Booking[];
+  reviews: any[];
 };
 
 export function AdminDashboard({
   users,
   services,
   bookings,
+  reviews,
 }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<"users" | "services" | "bookings">("users");
+  const [activeTab, setActiveTab] = useState<"users" | "services" | "bookings" | "reviews">("users");
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -110,10 +113,15 @@ export function AdminDashboard({
                 <Package className="size-4 mr-2" />
                 Services ({services.length})
               </>
-            ) : (
+            ) : activeTab === "bookings" ? (
               <>
                 <Calendar className="size-4 mr-2" />
                 Bookings ({bookings.length})
+              </>
+            ) : (
+              <>
+                <MessageSquare className="size-4 mr-2" />
+                Reviews ({reviews.length})
               </>
             )}
             <ChevronDown className="size-4 ml-2" />
@@ -131,6 +139,10 @@ export function AdminDashboard({
           <DropdownMenuItem onClick={() => setActiveTab("bookings")}>
             <Calendar className="size-4 mr-2" />
             Bookings ({bookings.length})
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setActiveTab("reviews")}>
+            <MessageSquare className="size-4 mr-2" />
+            Reviews ({reviews.length})
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -227,10 +239,10 @@ export function AdminDashboard({
                     <tr key={service.id} className="border-b last:border-0">
                       <td className="py-3 px-4 font-medium">{service.title}</td>
                       <td className="py-3 px-4">
-                        €{service.priceAdult}
+                        £{service.priceAdult}
                         {service.priceKids > 0 && (
                           <span className="text-muted-foreground text-xs ml-1">
-                            / €{service.priceKids} kids
+                            / £{service.priceKids} kids
                           </span>
                         )}
                       </td>
@@ -289,6 +301,11 @@ export function AdminDashboard({
       {/* Bookings table */}
       {activeTab === "bookings" && (
         <AdminBookings bookings={bookings} />
+      )}
+
+      {/* Reviews tab */}
+      {activeTab === "reviews" && (
+        <AdminReviews initialReviews={reviews} />
       )}
     </div>
   );

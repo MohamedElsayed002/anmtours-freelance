@@ -19,7 +19,7 @@ const baseUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
-  title: "A&T Tours | Discover Egypt - Sharm El Sheikh Tours",
+  title: "A&M Tours  | Discover Egypt - Sharm El Sheikh Tours",
   description:
     "Curated multi-day adventures and day trips in Egypt. Experience the Nile, Red Sea diving, and desert adventures.",
   icons: {
@@ -36,7 +36,6 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-
       <html lang="en" suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}

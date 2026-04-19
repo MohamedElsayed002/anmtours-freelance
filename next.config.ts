@@ -10,7 +10,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
       { protocol: "https", hostname: "img.clerk.com", pathname: "/**" },
       { protocol: "https", hostname: "www.bahighlife.com", pathname: "/**" },
-      { protocol: "https", hostname: "x00zgx6026.ufs.sh", pathname: "/**" }
+      { protocol: "https", hostname: "x00zgx6026.ufs.sh", pathname: "/**" },
+      { protocol: "https", hostname: "lh3.googleusercontent.com", pathname: "/**"}
     ],
   },
 };

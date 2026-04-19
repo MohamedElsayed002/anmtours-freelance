@@ -318,7 +318,7 @@ export function DestinationsContent({
                   <div className="space-y-3">
                     <div>
                       <label className="mb-1 block text-xs text-muted-foreground">
-                        {minPriceLabel} (€)
+                        {minPriceLabel} (£)
                       </label>
                       <Input
                         type="number"
@@ -331,7 +331,7 @@ export function DestinationsContent({
                     </div>
                     <div>
                       <label className="mb-1 block text-xs text-muted-foreground">
-                        {maxPriceLabel} (€)
+                        {maxPriceLabel} (£)
                       </label>
                       <Input
                         type="number"
@@ -425,7 +425,7 @@ export function DestinationsContent({
                     <div className="mt-4 flex items-end justify-between gap-2">
                       <div>
                         <span className="text-xl font-bold">
-                          €{Math.round(service.priceAdult)}
+                          £{Math.round(service.priceAdult)}
                         </span>
                         <span className="ml-1 text-sm text-muted-foreground">
                           /{fromLabel}

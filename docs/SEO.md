@@ -1,6 +1,6 @@
 # SEO Implementation Guide
 
-This document describes the SEO enhancements made to the A&T Tours travel agency project and explains the challenging parts.
+This document describes the SEO enhancements made to the A&M Tours travel agency project and explains the challenging parts.
 
 ---
 
@@ -16,15 +16,15 @@ This document describes the SEO enhancements made to the A&T Tours travel agency
 
 Every page exports `generateMetadata` for localized SEO:
 
-| Page | Metadata |
-|------|----------|
-| **Layout** (`[locale]/layout.tsx`) | Default title, description, Open Graph, Twitter cards |
-| **Home** | Home-specific title, description, alternates |
-| **Destinations** | Tours listing metadata |
-| **About** | About page metadata |
-| **Contact** | Contact page metadata |
-| **Travel Tips** | Travel tips metadata |
-| **Services** (`[slug]`) | Dynamic metadata from service title, description, image, price |
+| Page                               | Metadata                                                       |
+| ---------------------------------- | -------------------------------------------------------------- |
+| **Layout** (`[locale]/layout.tsx`) | Default title, description, Open Graph, Twitter cards          |
+| **Home**                           | Home-specific title, description, alternates                   |
+| **Destinations**                   | Tours listing metadata                                         |
+| **About**                          | About page metadata                                            |
+| **Contact**                        | Contact page metadata                                          |
+| **Travel Tips**                    | Travel tips metadata                                           |
+| **Services** (`[slug]`)            | Dynamic metadata from service title, description, image, price |
 
 ### 3. **International SEO (hreflang)**
 
@@ -132,10 +132,10 @@ return { title: t("homeTitle"), description: t("homeDescription") };
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|--------------|
-| `BASE_URL` | No | Canonical site URL (e.g. `https://anntours.vercel.app`). Used for sitemap, canonical URLs, OG images. |
-| `VERCEL_URL` | Auto | Set by Vercel. Used as fallback when `BASE_URL` is not set. |
+| Variable     | Required | Description                                                                                           |
+| ------------ | -------- | ----------------------------------------------------------------------------------------------------- |
+| `BASE_URL`   | No       | Canonical site URL (e.g. `https://anntours.vercel.app`). Used for sitemap, canonical URLs, OG images. |
+| `VERCEL_URL` | Auto     | Set by Vercel. Used as fallback when `BASE_URL` is not set.                                           |
 
 ---
 
@@ -152,17 +152,17 @@ return { title: t("homeTitle"), description: t("homeDescription") };
 
 ## Files Summary
 
-| File | Purpose |
-|------|---------|
-| `src/config/seo.ts` | SEO config, base URL, helpers |
-| `src/app/sitemap.ts` | Dynamic sitemap |
-| `src/app/robots.ts` | Robots.txt |
-| `src/app/[locale]/layout.tsx` | generateMetadata for locale |
-| `src/app/[locale]/page.tsx` | Home metadata + JSON-LD |
-| `src/app/[locale]/destinations/page.tsx` | Destinations metadata |
-| `src/app/[locale]/about/page.tsx` | About metadata |
-| `src/app/[locale]/contact/page.tsx` | Contact metadata |
-| `src/app/[locale]/travel-tips/page.tsx` | Travel tips metadata |
-| `src/app/[locale]/services/[slug]/page.tsx` | Service metadata + JSON-LD |
-| `src/components/seo/json-ld.tsx` | Organization, WebSite, TouristTrip schemas |
-| `messages/*.json` | Metadata translations (Metadata namespace) |
+| File                                        | Purpose                                    |
+| ------------------------------------------- | ------------------------------------------ |
+| `src/config/seo.ts`                         | SEO config, base URL, helpers              |
+| `src/app/sitemap.ts`                        | Dynamic sitemap                            |
+| `src/app/robots.ts`                         | Robots.txt                                 |
+| `src/app/[locale]/layout.tsx`               | generateMetadata for locale                |
+| `src/app/[locale]/page.tsx`                 | Home metadata + JSON-LD                    |
+| `src/app/[locale]/destinations/page.tsx`    | Destinations metadata                      |
+| `src/app/[locale]/about/page.tsx`           | About metadata                             |
+| `src/app/[locale]/contact/page.tsx`         | Contact metadata                           |
+| `src/app/[locale]/travel-tips/page.tsx`     | Travel tips metadata                       |
+| `src/app/[locale]/services/[slug]/page.tsx` | Service metadata + JSON-LD                 |
+| `src/components/seo/json-ld.tsx`            | Organization, WebSite, TouristTrip schemas |
+| `messages/*.json`                           | Metadata translations (Metadata namespace) |

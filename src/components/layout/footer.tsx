@@ -19,7 +19,7 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <Link href="/" className="inline-block">
-              <Image src="/logo.jpeg" alt="A&T Tours" width={220} height={200} className="h-14 w-auto object-contain md:h-16" />
+              <Image src="/logo.jpeg" alt="A&M Tours " width={220} height={200} className="h-14 w-auto object-contain md:h-16" />
             </Link>
             <p className="text-sm text-muted-foreground">{t("tagline")}</p>
           </div>
@@ -71,7 +71,7 @@ export function Footer() {
               {t("contactUs")}
             </h3>
             <ul className="space-y-3">
-              <li>
+              {/* <li>
                 <a
                   href={getWhatsAppUrl()}
                   target="_blank"
@@ -81,8 +81,8 @@ export function Footer() {
                   <MessageCircle className="size-4 shrink-0" />
                   {t("whatsapp")}
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a
                   href={`mailto:${CONTACT.email}`}
                   className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -90,7 +90,7 @@ export function Footer() {
                   <Mail className="size-4 shrink-0" />
                   {CONTACT.email}
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a
                   href={`tel:${CONTACT.phone}`}
@@ -118,7 +118,7 @@ export function Footer() {
 
         <div className="mt-12 border-t pt-8">
           <p className="text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} A&T Tours. {t("rights")}
+            © {new Date().getFullYear()} A&M Tours . {t("rights")}
           </p>
         </div>
       </div>

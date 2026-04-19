@@ -12,6 +12,7 @@ import { Footer } from "@/components/layout/footer";
 import { FloatingActions } from "@/components/layout/FloatingActions";
 import { SyncUser } from "@/components/auth/sync-user";
 import { RtlSync } from "@/components/rtl-sync";
+import { DirectionProvider } from "@/components/ui/direction";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -51,18 +52,20 @@ export default async function LocaleLayout({ children, params }: Props) {
     <NextIntlClientProvider messages={messages}>
       <QueryProvider>
         <WishlistProvider>
-        <RtlSync />
-        <SyncUser />
-        <div
-          className="min-h-screen flex flex-col"
-          lang={locale}
-          dir={locale === "ar" ? "rtl" : "ltr"}
-        >
-          <Navbar isAdmin={isAdmin} />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <FloatingActions />
-        </div>
+          <RtlSync />
+          <SyncUser />
+          <DirectionProvider direction={locale === "ar" ? "rtl" : "ltr"}>
+            <div
+              className="min-h-screen flex flex-col"
+              lang={locale}
+              dir={locale === "ar" ? "rtl" : "ltr"}
+            >
+              <Navbar isAdmin={isAdmin} />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <FloatingActions />
+            </div>
+          </DirectionProvider>
         </WishlistProvider>
       </QueryProvider>
     </NextIntlClientProvider>

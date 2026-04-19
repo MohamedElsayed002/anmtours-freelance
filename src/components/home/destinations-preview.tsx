@@ -101,7 +101,7 @@ export function DestinationsPreview({
                   </h3>
                   <p className="mt-1 text-sm text-muted-foreground">{location}</p>
                   <p className="mt-2 text-base font-bold text-foreground">
-                    {startingFrom} €{Math.round(service.priceAdult)}
+                    {startingFrom} £{Math.round(service.priceAdult)}
                   </p>
                 </div>
               </Link>

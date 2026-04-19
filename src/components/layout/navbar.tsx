@@ -50,7 +50,7 @@ export function Navbar({ isAdmin = false }: NavbarProps) {
     <header className="max-w-7xl mx-auto  top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <nav className="container flex h-16 items-center justify-between px-4 md:px-0  md:mx-0">
         <Link href="/" className="flex items-center space-x-2 font-semibold shrink-0">
-         <Image src="/logo.jpeg" alt="A&T Tours" width={220} height={200} className="h-14 w-auto object-contain md:h-16" />
+          <Image src="/logo.jpeg" alt="A&M Tours " width={220} height={200} className="h-14 w-auto object-contain md:h-16" />
         </Link>
 
         {/* Desktop nav - hidden on small screens */}
@@ -59,9 +59,8 @@ export function Navbar({ isAdmin = false }: NavbarProps) {
             <Link
               key={key}
               href={href}
-              className={`text-sm font-medium transition-colors hover:text-foreground ${
-                primary === true ? "text-primary" : "text-muted-foreground"
-              }`}
+              className={`text-sm font-medium transition-colors hover:text-foreground ${primary === true ? "text-primary" : "text-muted-foreground"
+                }`}
             >
               {t(key)}
             </Link>
@@ -96,10 +95,10 @@ export function Navbar({ isAdmin = false }: NavbarProps) {
                 {
                   isAdmin && (
                     <UserButton.Link
-                    label="Add Service"
-                    href={`/${locale}/services/add`}
-                    labelIcon={<Plus className="size-4" />}
-                  />
+                      label="Add Service"
+                      href={`/${locale}/services/add`}
+                      labelIcon={<Plus className="size-4" />}
+                    />
                   )
                 }
               </UserButton.MenuItems>
@@ -161,9 +160,8 @@ export function Navbar({ isAdmin = false }: NavbarProps) {
                   <Link
                     key={key}
                     href={href}
-                    className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors hover:bg-accent ${
-                      primary === true ? "text-primary" : "text-foreground"
-                    }`}
+                    className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors hover:bg-accent ${primary === true ? "text-primary" : "text-foreground"
+                      }`}
                   >
                     {t(key)}
                   </Link>

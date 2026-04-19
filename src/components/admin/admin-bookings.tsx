@@ -123,7 +123,7 @@ export function AdminBookings({ bookings }: AdminBookingsProps) {
                         `, ${booking.children} child${booking.children !== 1 ? "ren" : ""}`}
                     </td>
                     <td className="py-3 px-4 font-medium">
-                      €{booking.total.toLocaleString()}
+                      £{booking.total.toLocaleString()}
                     </td>
                     <td className="py-3 px-4 text-muted-foreground text-xs">
                       {format(new Date(booking.createdAt), "PPp")}
