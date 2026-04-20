@@ -239,10 +239,10 @@ export function AdminDashboard({
                     <tr key={service.id} className="border-b last:border-0">
                       <td className="py-3 px-4 font-medium">{service.title}</td>
                       <td className="py-3 px-4">
-                        £{service.priceAdult}
+                        ${service.priceAdult}
                         {service.priceKids > 0 && (
                           <span className="text-muted-foreground text-xs ml-1">
-                            / £{service.priceKids} kids
+                            / ${service.priceKids} kids
                           </span>
                         )}
                       </td>

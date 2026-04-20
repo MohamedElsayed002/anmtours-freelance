@@ -76,7 +76,7 @@ export function ServiceCard({
       </CardContent>
       <CardFooter className="flex items-center justify-between border-t pt-4">
         <div>
-          <span className="text-2xl font-bold">£{Math.round(service.priceAdult)}</span>
+          <span className="text-2xl font-bold">${Math.round(service.priceAdult)}</span>
           <span className="ml-1 text-sm text-muted-foreground">{from}</span>
         </div>
         <div className="flex items-center gap-2">

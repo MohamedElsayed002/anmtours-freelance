@@ -95,13 +95,13 @@ export function BookingSidebar({
         <p className="text-sm text-muted-foreground">
           From{" "}
           <span className="text-2xl font-bold text-foreground">
-            £{Math.round(priceAdult)}
+            ${Math.round(priceAdult)}
           </span>{" "}
           /{perPersonLabel}
         </p>
         {priceKids > 0 && (
           <p className="mt-1 text-xs text-muted-foreground">
-            Kids: £{Math.round(priceKids)} /{perPersonLabel}
+            Kids: ${Math.round(priceKids)} /{perPersonLabel}
           </p>
         )}
       </div>
@@ -227,27 +227,27 @@ export function BookingSidebar({
         {adults > 0 && (
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">
-              £{Math.round(priceAdult)} x {adults} Adult{adults !== 1 ? "s" : ""}
+              ${Math.round(priceAdult)} x {adults} Adult{adults !== 1 ? "s" : ""}
             </span>
-            <span>£{(adults * priceAdult).toLocaleString()}</span>
+            <span>${(adults * priceAdult).toLocaleString()}</span>
           </div>
         )}
         {children > 0 && (
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">
-              £{Math.round(priceKids)} x {children} Child
+              ${Math.round(priceKids)} x {children} Child
               {children !== 1 ? "ren" : ""}
             </span>
-            <span>£{(children * priceKids).toLocaleString()}</span>
+            <span>${(children * priceKids).toLocaleString()}</span>
           </div>
         )}
         {/* <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">{localTaxesLabel}</span>
-          <span>£{tax}</span>
+          <span>${tax}</span>
         </div> */}
         <div className="flex justify-between pt-2 text-base font-bold">
           <span>{totalLabel}</span>
-          <span>£{total.toLocaleString()}</span>
+          <span>${total.toLocaleString()}</span>
         </div>
       </div>
       <Button onClick={handleRequestBooking} className="w-full bg-teal-600">

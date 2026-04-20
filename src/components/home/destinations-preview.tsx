@@ -75,36 +75,36 @@ export function DestinationsPreview({
                   visible: { opacity: 1, y: 0 },
                 }}
               >
-              <Link
-                href={`/services/${service.slug}`}
-                className="group overflow-hidden rounded-xl border bg-card shadow-sm transition-all hover:shadow-md"
-              >
-                <div className="relative aspect-[4/3] bg-muted">
-                  {service.coverImage ? (
-                    <Image
-                      src={service.coverImage}
-                      alt={title}
-                      fill
-                      unoptimized
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 768px) 85vw, (max-width: 1200px) 45vw, 280px"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-teal-500/20 to-teal-700/30 text-4xl text-muted-foreground">
-                      ✈️
-                    </div>
-                  )}
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-foreground transition-colors group-hover:text-teal-600 line-clamp-2">
-                    {title}
-                  </h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{location}</p>
-                  <p className="mt-2 text-base font-bold text-foreground">
-                    {startingFrom} £{Math.round(service.priceAdult)}
-                  </p>
-                </div>
-              </Link>
+                <Link
+                  href={`/services/${service.slug}`}
+                  className="group overflow-hidden rounded-xl border bg-card shadow-sm transition-all hover:shadow-md"
+                >
+                  <div className="relative aspect-[4/3] bg-muted">
+                    {service.coverImage ? (
+                      <Image
+                        src={service.coverImage}
+                        alt={title}
+                        fill
+                        unoptimized
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        sizes="(max-width: 768px) 85vw, (max-width: 1200px) 45vw, 280px"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-teal-500/20 to-teal-700/30 text-4xl text-muted-foreground">
+                        ✈️
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-semibold text-foreground transition-colors group-hover:text-teal-600 line-clamp-2">
+                      {title}
+                    </h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{location}</p>
+                    <p className="mt-2 text-base font-bold text-foreground">
+                      {startingFrom} ${Math.round(service.priceAdult)}
+                    </p>
+                  </div>
+                </Link>
               </motion.div>
             );
           })}
