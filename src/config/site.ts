@@ -6,7 +6,7 @@
 export const SITE_CONFIG = {
   /** WhatsApp number (client/owner) - international format, no + or spaces */
   whatsapp: {
-    phone: "2+201229172336", // e.g. Egypt: +20 12 2917 2336
+    phone: "+201229172336", // e.g. Egypt: +20 12 2917 2336
     defaultMessage: "Hi! I'm interested in your tours. Can you help me?",
   },
   contact: {
