@@ -11,7 +11,7 @@ export type ServiceWithDetails = Awaited<ReturnType<typeof getServices>>[number]
 export async function getServices() {
   try {
     return await prisma.service.findMany({
-      where: { isActive: true },
+      where: { isActive: true},
       orderBy: { createdAt: "desc" },
     });
   } catch {

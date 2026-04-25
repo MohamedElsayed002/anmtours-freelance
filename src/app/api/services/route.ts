@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { generateAndStoreServiceEmbedding } from "@/lib/ai";
+import { isServiceLocation } from "@/lib/service-location";
 
 export async function GET() {
   try {
@@ -33,6 +34,7 @@ export async function POST(request: Request) {
       duration,
       location,
       category,
+      serviceLocation,
       maxParticipants,
       slug,
     } = body;
@@ -47,6 +49,13 @@ export async function POST(request: Request) {
     if (!slug || typeof slug !== "string") {
       return NextResponse.json(
         { error: "Slug is required" },
+        { status: 400 }
+      );
+    }
+
+    if (!isServiceLocation(serviceLocation)) {
+      return NextResponse.json(
+        { error: "Valid serviceLocation is required" },
         { status: 400 }
       );
     }
@@ -74,6 +83,7 @@ export async function POST(request: Request) {
         duration: duration || null,
         location: location || null,
         category: category || null,
+        serviceLocation,
         maxParticipants: maxParticipants ?? null,
         slug: slug.toLowerCase().replace(/\s+/g, "-"),
       },

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { generateAndStoreServiceEmbedding } from "@/lib/ai";
+import { isServiceLocation } from "@/lib/service-location";
 
 export async function GET(
   _request: Request,
@@ -46,6 +47,7 @@ export async function PATCH(
       duration,
       location,
       category,
+      serviceLocation,
       maxParticipants,
       slug,
       isActive,
@@ -54,6 +56,16 @@ export async function PATCH(
     const existing = await prisma.service.findUnique({ where: { id } });
     if (!existing) {
       return NextResponse.json({ error: "Service not found" }, { status: 404 });
+    }
+
+    if (
+      serviceLocation !== undefined &&
+      !isServiceLocation(serviceLocation)
+    ) {
+      return NextResponse.json(
+        { error: "Valid serviceLocation is required" },
+        { status: 400 }
+      );
     }
 
     const priceAdultNum =
@@ -91,6 +103,7 @@ export async function PATCH(
         ...(duration !== undefined && { duration: duration || null }),
         ...(location !== undefined && { location: location || null }),
         ...(category !== undefined && { category: category || null }),
+        ...(serviceLocation !== undefined && { serviceLocation }),
         ...(maxParticipants !== undefined && {
           maxParticipants: maxParticipants ?? null,
         }),

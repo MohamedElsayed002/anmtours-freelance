@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import { getServiceDetailForLocale } from "@/lib/services";
 import { Pagination } from "@/components/ui/pagination";
+import { SERVICE_LOCATION_OPTIONS } from "@/lib/service-location";
 
 /** Number of service cards shown per page */
 const ITEMS_PER_PAGE = 10;
@@ -33,6 +34,7 @@ type ServiceWithTitle = {
   details: unknown;
   category: string | null;
   location: string | null;
+  serviceLocation: string;
   duration: string | null;
   priceAdult: number;
   priceKids: number;
@@ -46,6 +48,7 @@ type DestinationsContentProps = {
   clearAllLabel: string;
   categoryLabel: string;
   locationLabel: string;
+  serviceLocationLabel: string;
   durationLabel: string;
   priceRangeLabel: string;
   minPriceLabel: string;
@@ -67,6 +70,7 @@ export function DestinationsContent({
   clearAllLabel,
   categoryLabel,
   locationLabel,
+  serviceLocationLabel,
   durationLabel,
   priceRangeLabel,
   minPriceLabel,
@@ -85,6 +89,9 @@ export function DestinationsContent({
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState<Set<string>>(new Set());
   const [locations, setLocations] = useState<Set<string>>(new Set());
+  const [serviceLocations, setServiceLocations] = useState<Set<string>>(
+    new Set()
+  );
   const [durations, setDurations] = useState<Set<string>>(new Set());
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
@@ -102,6 +109,13 @@ export function DestinationsContent({
       Array.from(
         new Set(services.map((s) => s.location).filter(Boolean)) as Set<string>
       ).sort(),
+    [services]
+  );
+  const availableServiceLocations = useMemo(
+    () =>
+      SERVICE_LOCATION_OPTIONS.filter((option) =>
+        services.some((service) => service.serviceLocation === option.value)
+      ),
     [services]
   );
   const uniqueDurations = useMemo(
@@ -127,6 +141,7 @@ export function DestinationsContent({
   const clearAll = () => {
     setCategories(new Set());
     setLocations(new Set());
+    setServiceLocations(new Set());
     setDurations(new Set());
     setPriceMin("");
     setPriceMax("");
@@ -144,7 +159,12 @@ export function DestinationsContent({
           !title.toLowerCase().includes(q) &&
           !description.toLowerCase().includes(q) &&
           !(service.category?.toLowerCase().includes(q)) &&
-          !(service.location?.toLowerCase().includes(q))
+          !(service.location?.toLowerCase().includes(q)) &&
+          !SERVICE_LOCATION_OPTIONS.some(
+            (option) =>
+              option.value === service.serviceLocation &&
+              option.label.toLowerCase().includes(q)
+          )
         ) {
           return false;
         }
@@ -154,6 +174,12 @@ export function DestinationsContent({
         return false;
       }
       if (locations.size > 0 && service.location && !locations.has(service.location)) {
+        return false;
+      }
+      if (
+        serviceLocations.size > 0 &&
+        !serviceLocations.has(service.serviceLocation)
+      ) {
         return false;
       }
       if (durations.size > 0 && service.duration && !durations.has(service.duration)) {
@@ -181,6 +207,7 @@ export function DestinationsContent({
     search,
     categories,
     locations,
+    serviceLocations,
     durations,
     priceMin,
     priceMax,
@@ -239,7 +266,16 @@ export function DestinationsContent({
               </button>
             </div>
 
-            <Accordion type="multiple" defaultValue={["category", "location", "duration", "price"]}>
+            <Accordion
+              type="multiple"
+              defaultValue={[
+                "category",
+                "service-location",
+                "location",
+                "duration",
+                "price",
+              ]}
+            >
               {uniqueCategories.length > 0 && (
                 <AccordionItem value="category">
                   <AccordionTrigger>{categoryLabel}</AccordionTrigger>
@@ -257,6 +293,35 @@ export function DestinationsContent({
                             className="size-4 rounded border-input"
                           />
                           <span className="text-sm">{cat}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+
+              {availableServiceLocations.length > 0 && (
+                <AccordionItem value="service-location">
+                  <AccordionTrigger>{serviceLocationLabel}</AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-2">
+                      {availableServiceLocations.map((serviceLocation) => (
+                        <label
+                          key={serviceLocation.value}
+                          className="flex cursor-pointer items-center gap-2"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={serviceLocations.has(serviceLocation.value)}
+                            onChange={() =>
+                              toggleFilter(
+                                setServiceLocations,
+                                serviceLocation.value
+                              )
+                            }
+                            className="size-4 rounded border-input"
+                          />
+                          <span className="text-sm">{serviceLocation.label}</span>
                         </label>
                       ))}
                     </div>

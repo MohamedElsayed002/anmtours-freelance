@@ -25,6 +25,7 @@ export default async function DestinationsPage({ params }: Props) {
         clearAllLabel={t("clearAllLabel")}
         categoryLabel={t("categoryLabel")}
         locationLabel={t("locationLabel")}
+        serviceLocationLabel={t("serviceLocationLabel")}
         durationLabel={t("durationLabel")}
         priceRangeLabel={t("priceRangeLabel")}
         minPriceLabel={t("minPriceLabel")}

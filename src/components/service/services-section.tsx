@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Compass, MapPin, Waves } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { getServices } from "@/lib/services";
 import { ServicesCarousel } from "./services-carousel";
@@ -19,8 +19,32 @@ export async function ServicesSection({
   startingFrom = "STARTING FROM",
 }: ServicesSectionProps) {
   const services = await getServices();
+  const featuredLocations = [
+    {
+      key: "sharm-elsheikh",
+      title: "Sharm El Sheikh",
+      subtitle: "Red Sea escapes, desert adventures, and iconic snorkeling trips.",
+      accent: "from-cyan-500/15 via-sky-500/10 to-transparent",
+      badgeClass:
+        "border-cyan-200 bg-cyan-500/10 text-cyan-700 dark:border-cyan-900 dark:text-cyan-300",
+      icon: Waves,
+      services: services.filter(
+        (item) => item.serviceLocation === "sharm-elsheikh"
+      ),
+    },
+    {
+      key: "hurghada",
+      title: "Hurghada",
+      subtitle: "Island hopping, glassy waters, and easy-going coastal getaways.",
+      accent: "from-amber-500/15 via-orange-500/10 to-transparent",
+      badgeClass:
+        "border-amber-200 bg-amber-500/10 text-amber-700 dark:border-amber-900 dark:text-amber-300",
+      icon: Compass,
+      services: services.filter((item) => item.serviceLocation === "hurghada"),
+    },
+  ].filter((location) => location.services.length > 0);
 
-  if (services.length === 0) {
+  if (featuredLocations.length === 0) {
     return (
       <section className="bg-muted/30 py-16">
         <div className="container mx-auto px-4">
@@ -61,13 +85,56 @@ export async function ServicesSection({
             </Link>
           </div>
 
-          {/* Carousel */}
-          <div className="relative px-6 md:px-12">
-            <ServicesCarousel
-              services={services}
-              locale={locale}
-              startingFrom={startingFrom}
-            />
+          <div className="space-y-8">
+            {featuredLocations.map((location) => {
+              const Icon = location.icon;
+
+              return (
+                <div
+                  key={location.key}
+                  className="overflow-hidden rounded-[2rem] border border-border/60 bg-background shadow-sm"
+                >
+                  <div
+                    className={`bg-gradient-to-r ${location.accent} px-6 py-6 sm:px-8`}
+                  >
+                    <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                      <div className="space-y-3">
+                        <div
+                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] ${location.badgeClass}`}
+                        >
+                          <Icon className="size-3.5" />
+                          Featured in {location.title}
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                            {location.title}
+                          </h3>
+                          <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
+                            {location.subtitle}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 self-start rounded-full border border-border/70 bg-background/80 px-4 py-2 text-sm text-muted-foreground backdrop-blur">
+                        <MapPin className="size-4 text-teal-600" />
+                        <span>
+                          {location.services.length} experience
+                          {location.services.length === 1 ? "" : "s"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative px-6 py-6 md:px-12 md:py-8">
+                    <ServicesCarousel
+                      services={location.services}
+                      locale={locale}
+                      startingFrom={startingFrom}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

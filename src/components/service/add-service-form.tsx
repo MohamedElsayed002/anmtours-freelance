@@ -4,7 +4,10 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createServiceSchema } from "@/lib/validations/service";
+import {
+  createServiceSchema,
+  type ServiceFormValues,
+} from "@/lib/validations/service";
 import { CoverImageUploader, GalleryImageUploader } from "./image-uploader";
 import { LocaleArrayEditor } from "./locale-array-editor";
 import { AddServiceStepper } from "./add-service-stepper";
@@ -22,8 +25,15 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { z } from "zod";
 import { routing } from "@/i18n/routing";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { SERVICE_LOCATION_OPTIONS } from "@/lib/service-location";
 
 const LOCALES = routing.locales;
 const LOCALE_LABELS: Record<string, string> = {
@@ -48,8 +58,8 @@ export function AddServiceForm() {
     t(key, values as Record<string, string>);
 
   const schema = createServiceSchema(tForm);
-  const form = useForm<z.input<typeof schema>>({
-    resolver: zodResolver(schema) as any,
+  const form = useForm<ServiceFormValues>({
+    resolver: zodResolver(schema),
     defaultValues: {
       coverImage: "",
       images: [],
@@ -63,6 +73,7 @@ export function AddServiceForm() {
       duration: "",
       location: "",
       category: "",
+      serviceLocation: "sharm-elsheikh",
       maxParticipants: "",
       slug: "",
     },
@@ -72,13 +83,13 @@ export function AddServiceForm() {
   const details = form.watch("details");
 
   const validateStep = async (s: number) => {
-    const fields: (keyof z.input<typeof schema>)[] =
+    const fields: (keyof ServiceFormValues)[] =
       s === 1
         ? ["details"]
         : s === 2
-          ? ["priceAdult", "slug", "duration", "location", "category", "maxParticipants"]
+          ? ["priceAdult", "slug", "duration", "location", "category", "serviceLocation", "maxParticipants"]
           : ["coverImage", "images"];
-    const result = await form.trigger(fields as any);
+    const result = await form.trigger(fields);
     return result;
   };
 
@@ -88,7 +99,7 @@ export function AddServiceForm() {
 
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
 
-  const onSubmit = async (data: z.input<typeof schema>) => {
+  const onSubmit = async (data: ServiceFormValues) => {
     try {
       const priceAdult =
         typeof data.priceAdult === "string" ? parseFloat(data.priceAdult) : data.priceAdult;
@@ -110,6 +121,7 @@ export function AddServiceForm() {
           duration: data.duration || undefined,
           location: data.location || undefined,
           category: data.category || undefined,
+          serviceLocation: data.serviceLocation,
           maxParticipants: data.maxParticipants || undefined,
           slug: data.slug,
         }),
@@ -279,6 +291,37 @@ export function AddServiceForm() {
                         {...field}
                       />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="serviceLocation"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Service Location</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select service location" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {SERVICE_LOCATION_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Choose the destination bucket shown on the homepage.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

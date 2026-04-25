@@ -58,6 +58,9 @@ model Service {
   category        String?  // adventure, beach, cultural, etc.
   maxParticipants Int?     // Optional group size limit
   isActive        Boolean  @default(true)
+
+  serviceLocation String @default("sharm-elsheikh")
+
   slug            String   @unique
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

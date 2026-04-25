@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SERVICE_LOCATION_VALUES } from "@/lib/service-location";
 
 export type TranslationFn = (key: string, values?: Record<string, string | number>) => string;
 
@@ -38,6 +39,9 @@ export const createServiceSchema = (t: TranslationFn) => {
     duration: z.string().optional(),
     location: z.string().optional(),
     category: z.string().optional(),
+    serviceLocation: z.enum(SERVICE_LOCATION_VALUES, {
+      error: t("required"),
+    }),
     maxParticipants: z
       .union([z.string(), z.number()])
       .optional()
