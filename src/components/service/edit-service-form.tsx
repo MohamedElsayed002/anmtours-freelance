@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createServiceSchema,
+  type ServiceFormInputValues,
   type ServiceFormValues,
 } from "@/lib/validations/service";
 import { CoverImageUploader, GalleryImageUploader } from "./image-uploader";
@@ -33,7 +34,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SERVICE_LOCATION_OPTIONS } from "@/lib/service-location";
+import {
+  SERVICE_LOCATION_OPTIONS,
+  type ServiceLocation,
+} from "@/lib/service-location";
 
 const LOCALES = routing.locales;
 const LOCALE_LABELS: Record<string, string> = {
@@ -68,7 +72,7 @@ type ServiceData = {
   duration: string | null;
   location: string | null;
   category: string | null;
-  serviceLocation: string;
+  serviceLocation: ServiceLocation;
   maxParticipants: number | null;
   slug: string;
   isActive: boolean;
@@ -84,7 +88,7 @@ export function EditServiceForm({ serviceId }: EditServiceFormProps) {
     t(key, values as Record<string, string>);
 
   const schema = createServiceSchema(tForm);
-  const form = useForm<ServiceFormValues>({
+  const form = useForm<ServiceFormInputValues, unknown, ServiceFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       coverImage: "",
@@ -176,7 +180,7 @@ export function EditServiceForm({ serviceId }: EditServiceFormProps) {
   }, [serviceId, form]);
 
   const validateStep = async (s: number) => {
-    const fields: (keyof ServiceFormValues)[] =
+    const fields: (keyof ServiceFormInputValues)[] =
       s === 1
         ? ["details"]
         : s === 2

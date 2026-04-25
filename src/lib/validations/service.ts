@@ -54,4 +54,6 @@ export const createServiceSchema = (t: TranslationFn) => {
   });
 };
 
-export type ServiceFormValues = z.infer<ReturnType<typeof createServiceSchema>>;
+export type ServiceFormSchema = ReturnType<typeof createServiceSchema>;
+export type ServiceFormValues = z.output<ServiceFormSchema>;
+export type ServiceFormInputValues = z.input<ServiceFormSchema>;

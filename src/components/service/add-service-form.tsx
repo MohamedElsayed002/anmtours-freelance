@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createServiceSchema,
+  type ServiceFormInputValues,
   type ServiceFormValues,
 } from "@/lib/validations/service";
 import { CoverImageUploader, GalleryImageUploader } from "./image-uploader";
@@ -58,7 +59,7 @@ export function AddServiceForm() {
     t(key, values as Record<string, string>);
 
   const schema = createServiceSchema(tForm);
-  const form = useForm<ServiceFormValues>({
+  const form = useForm<ServiceFormInputValues, unknown, ServiceFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       coverImage: "",
@@ -83,7 +84,7 @@ export function AddServiceForm() {
   const details = form.watch("details");
 
   const validateStep = async (s: number) => {
-    const fields: (keyof ServiceFormValues)[] =
+    const fields: (keyof ServiceFormInputValues)[] =
       s === 1
         ? ["details"]
         : s === 2
